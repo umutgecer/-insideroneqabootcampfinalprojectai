@@ -1,0 +1,65 @@
+name: PR Test Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  test:
+    name: Run Test Automation
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Run UI test suite
+        run: mvn -B clean test
+
+      - name: Publish JUnit test report (PR Checks)
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Maven Surefire Results
+          path: target/surefire-reports/junitreports/TEST-*.xml
+          reporter: java-junit
+          fail-on-error: true
+
+      - name: Upload test outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output-${{ github.run_number }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            target/surefire-reports/**
+            test-output/**
+
+      - name: Add CI run summary
+        if: always()
+        run: |
+          {
+            echo "## Test Automation Output"
+            echo ""
+            echo "- Workflow: \`${{ github.workflow }}\`"
+            echo "- Run: [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            echo "- Branch: \`${{ github.head_ref }}\`"
+            echo "- Commit: \`${{ github.sha }}\`"
+            echo ""
+            echo "Artifacts include Surefire reports and custom test-output files."
+          } >> "$GITHUB_STEP_SUMMARY"
