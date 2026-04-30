@@ -27,7 +27,7 @@ public class BaseTest {
         options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--window-size-maximize");
         driver = new ChromeDriver(options);
 
         driver.manage().window().maximize();

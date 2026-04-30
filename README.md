@@ -109,7 +109,6 @@ Proje, GitHub Actions ile pull request odakli bir pipeline'a entegre edilmistir.
 ## Notlar
 
 - Testler su an headless Chrome ile calisacak sekilde ayarlidir.
-- Headless modda stabilite icin `--window-size=1920,1080` argumani eklenmistir.
 - Log kayitlari `log4j2` ile alinmaktadir.
 
 ## Gelistirme Onerileri
