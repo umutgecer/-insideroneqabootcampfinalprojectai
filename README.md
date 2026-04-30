@@ -15,7 +15,7 @@
 9. Açılan sayfada `Apply For This Job` butonuna tıklanır.
 10. Form sayfasının açıldığı başlık ve `Submit` butonuyla kontrol edilir.
 
-# Insider One AI Bootcamp Test Automation Projesi
+# Insider One AI Bootcamp Final Projesi
 
 Bu proje, Insider One kariyer akisina yonelik bir UI test otomasyon odevidir.  
 Teknoloji olarak Java + Selenium + TestNG + Maven kullanir ve calisma sonunda otomatik test raporu uretir.
@@ -56,34 +56,6 @@ Test senaryosu temel olarak su adimlari dogrular:
     - `TestReportListener`: TestNG listener ile durum/sure/hata/kanit kaydi
     - `ReportManager`: ExtentReports konfigurasyonu
 
-## Kurulum
-
-Gereksinimler:
-
-- JDK 21
-- Maven 3.8+
-- Google Chrome
-
-Kurulum adimlari:
-
-```bash
-mvn clean install -DskipTests
-```
-
-## Test Calistirma
-
-Tum testleri calistirmak icin:
-
-```bash
-mvn test
-```
-
-Belirli test sinifini calistirmak icin:
-
-```bash
-mvn -Dtest=tests.insideroneCase test
-```
-
 ## Raporlama Mekanizmasi
 
 Projede TestNG listener tabanli ozel raporlama bulunur.
@@ -120,7 +92,6 @@ Proje, GitHub Actions ile pull request odakli bir pipeline'a entegre edilmistir.
     - `target/surefire-reports` ve `test-output` artefact olarak yuklenmesi
 - Sonuclar PR dogrulamasinda kullanilir; test job'i fail olursa PR check fail olur.
 
-## Notlar
+## AI Destegi Ozeti
 
-- Testler su an headless Chrome ile calisacak sekilde ayarlidir.
-- Log kayitlari `log4j2` ile alinmaktadir.
+- Bu çalışmada, AI desteğinden öncelikli olarak verilen URL sayfalarının test otomasyonu bakış açısıyla incelenmesinde yararlanıldı. Sonrasında raporlama ve CI/CD süreçleri için örnekler üretme ve  adımlar için bir roadmap oluşturma konularında destek sağlanmıştır.
