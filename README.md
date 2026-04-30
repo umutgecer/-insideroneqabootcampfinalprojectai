@@ -2,6 +2,19 @@
 
 ### umutgecer@outlook.com
 
+## Test Senaryosu
+
+1. InsiderOne ana sayfasına gidilir ve sayfadaki bölümler kontrol edilir.
+2. Kariyer sayfasına gidilir ve `See All` butonuna tıklanır.
+3. QA iş kartı aranır ve üstüne tıklanır.
+4. QA iş listesinin var olup olmadığı kontrol edilir.
+5. Lokasyon filtresi açılır ve `Istanbul` seçeneği seçilir.
+6. Listelenen iş başlıklarının `Quality Assurance` veya `QA` tanımları içerdiği kontrol edilir.
+7. Listelenen iş başlıklarının konumlarının `Istanbul` olduğu kontrol edilir.
+8. Listedeki bir iş ilanına ait `Apply` butonuna tıklanır.
+9. Açılan sayfada `Apply For This Job` butonuna tıklanır.
+10. Form sayfasının açıldığı başlık ve `Submit` butonuyla kontrol edilir.
+
 # Insider One AI Bootcamp Test Automation Projesi
 
 Bu proje, Insider One kariyer akisina yonelik bir UI test otomasyon odevidir.  
@@ -102,7 +115,8 @@ Proje, GitHub Actions ile pull request odakli bir pipeline'a entegre edilmistir.
 - Calisan adimlar:
     - Java 21 kurulumu
     - `mvn -B clean test` ile test kosumu
-    - Maven Surefire JUnit XML sonucunun PR check olarak yayinlanmasi (`target/surefire-reports/junitreports/TEST-*.xml`)
+    - Maven Surefire JUnit XML sonucunun PR check olarak yayinlanmasi (
+      `target/surefire-reports/junitreports/TEST-*.xml`)
     - `target/surefire-reports` ve `test-output` artefact olarak yuklenmesi
 - Sonuclar PR dogrulamasinda kullanilir; test job'i fail olursa PR check fail olur.
 
@@ -110,9 +124,3 @@ Proje, GitHub Actions ile pull request odakli bir pipeline'a entegre edilmistir.
 
 - Testler su an headless Chrome ile calisacak sekilde ayarlidir.
 - Log kayitlari `log4j2` ile alinmaktadir.
-
-## Gelistirme Onerileri
-
-- Headless/non-headless secimini Maven parametresiyle yonetmek
-- Locatorlari daha dayanikli hale getirmek
-- Test verisi ve environment konfiglerini disaridan okumak

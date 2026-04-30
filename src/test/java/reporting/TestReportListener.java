@@ -32,8 +32,8 @@ public class TestReportListener implements ITestListener {
         try {
             REPORT.flush();
         } catch (Exception e) {
-            // Reporter hatasi test sonucunu etkilemesin.
-            System.err.println("Rapor flush hatasi: " + e.getMessage());
+            // Reporter errors should not affect test outcomes.
+            System.err.println("Report flush error: " + e.getMessage());
         }
     }
 
@@ -44,22 +44,22 @@ public class TestReportListener implements ITestListener {
         ExtentTest test = REPORT.createTest(methodName)
                 .assignCategory(className);
         TEST_NODE.set(test);
-        test.info("Test basladi: " + className + "." + methodName);
+        test.info("Test started: " + className + "." + methodName);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        finalizeTest(result, Status.PASS, "Test basarili.");
+        finalizeTest(result, Status.PASS, "Test passed.");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        finalizeTest(result, Status.FAIL, "Test basarisiz.");
+        finalizeTest(result, Status.FAIL, "Test failed.");
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        finalizeTest(result, Status.SKIP, "Test atlandi.");
+        finalizeTest(result, Status.SKIP, "Test skipped.");
     }
 
     private void finalizeTest(ITestResult result, Status status, String message) {
@@ -67,7 +67,7 @@ public class TestReportListener implements ITestListener {
         if (test == null) {
             return;
         }
-        test.log(status, message + " Sure: " + getDurationMs(result) + " ms");
+        test.log(status, message + " Duration: " + getDurationMs(result) + " ms");
 
         if (result.getThrowable() != null) {
             if (status == Status.FAIL) {
@@ -88,7 +88,7 @@ public class TestReportListener implements ITestListener {
     private void attachEvidence(ExtentTest test, ITestResult result, String status) {
         WebDriver driver = resolveDriver(result);
         if (driver == null) {
-            test.warning("Driver bulunamadi, ekran goruntusu/page source eklenemedi.");
+            test.warning("Driver not found, screenshot/page source could not be attached.");
             return;
         }
 
@@ -99,12 +99,12 @@ public class TestReportListener implements ITestListener {
             Path screenshotPath = takeScreenshot(driver, evidenceDir, baseName + ".png");
             Path htmlPath = savePageSource(driver, evidenceDir, baseName + ".html");
 
-            test.info("Durum: " + status);
-            test.info("Ekran goruntusu: " + screenshotPath.toString());
-            test.info("HTML kaniti: " + htmlPath.toString());
+            test.info("Status: " + status);
+            test.info("Screenshot: " + screenshotPath);
+            test.info("HTML evidence: " + htmlPath);
             test.info(MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath.toString()).build());
         } catch (Exception e) {
-            test.warning("Kanit eklenemedi: " + e.getMessage());
+            test.warning("Evidence could not be attached: " + e.getMessage());
         }
     }
 
@@ -133,7 +133,7 @@ public class TestReportListener implements ITestListener {
         try {
             Files.createDirectories(path);
         } catch (IOException e) {
-            throw new RuntimeException("Rapor klasoru olusturulamadi: " + path, e);
+            throw new RuntimeException("Report directory could not be created: " + path, e);
         }
     }
 }
